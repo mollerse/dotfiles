@@ -7,3 +7,4 @@ ln -s .extra ~/.extra
 ln -s .exports ~/.exports
 ln -s .functions ~/.functions
 ln -s .gitconfig ~/.gitconfig
+ln -s .inputrc ~/.inputrc
