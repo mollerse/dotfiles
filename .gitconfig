@@ -1,5 +1,5 @@
 [alias]
-	c = commit
+	c = checkout
 	f = fetch
 	p = push
 	s = status
@@ -7,6 +7,7 @@
 	g = gui
 	r = rebase
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	m = merge
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
@@ -26,5 +27,5 @@
 [merge]
 	log = true
 [user]
-	name = Stian Veum Mollersen
+	name = Stian Veum Møllersen
 	email = stian.moellersen@gmail.com
