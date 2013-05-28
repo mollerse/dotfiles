@@ -6,7 +6,9 @@
 TERM='xterm-256color'
 
 # Change this to your own username
-DEFAULT_USERNAME=''
+DEFAULT_USER='mollerse'
+# Change this to your own host
+DEFAULT_HOST='tiamat'
 
 # Threshold (sec) for showing cmd exec time
 CMD_MAX_EXEC_TIME=5
@@ -33,9 +35,10 @@ zstyle ':vcs_info:git*' actionformats '%b|%a'
 # enable prompt substitution
 setopt PROMPT_SUBST
 
-# Only show username if not default
-#[ $USER != $DEFAULT_USERNAME ] && local username='%n@%m '
-username='%n@%m'
+[ $HOST != $DEFAULT_HOST ] && local hostcolor='009'
+[ $HOST = $DEFAULT_HOST ] && local hostcolor='012'
+[ $USER != $DEFAULT_USER ] && local usercolor='009'
+[ $USER = $DEFAULT_USER ] && local usercolor='012'
 
 # Fastest possible way to check if repo is dirty
 git_dirty() {
@@ -60,7 +63,7 @@ preexec() {
 precmd() {
 	vcs_info
 	# Add `%*` to display the time
-	print -P '\n%F{012}$username%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
+	print -P '\n%F{$usercolor}%n%f%F{$hostcolor}@%m%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
 	# Reset value since `preexec` isn't always triggered
 	unset cmd_timestamp
 }
