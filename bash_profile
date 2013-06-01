@@ -4,7 +4,3 @@ for file in ~/.{extra,bash_prompt,exports,aliases,functions}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
-
-# Prefer US English and use UTF-8
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US"

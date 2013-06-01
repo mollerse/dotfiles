@@ -1,0 +1,7 @@
+# PATH like a bawss
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:$HOME/local/bin
+PATH=$PATH:$HOME/bin
+PATH=$PATH:/sbin
+
+export PATH
