@@ -1,4 +1,9 @@
 For zsh:
-`. install.sh `
+```
+. ./install.sh
+```
+
 For bash:
-`. install.sh bash`
+```
+. ./install.sh bash
+```
