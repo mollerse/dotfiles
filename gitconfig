@@ -29,3 +29,5 @@
 [user]
 	name = Stian Veum Møllersen
 	email = stian.moellersen@gmail.com
+[color]
+	ui = auto
