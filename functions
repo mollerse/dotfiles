@@ -93,3 +93,7 @@ function _completemarks {
 
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
+
+function cd {
+	builtin cd "$@" && ls;
+}
