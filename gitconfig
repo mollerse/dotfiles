@@ -2,7 +2,7 @@
 	c = checkout
 	f = fetch
 	p = push
-	s = status
+	s = status -sb
 	df = diff --color --color-words --abbrev
 	g = gui
 	r = rebase
