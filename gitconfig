@@ -32,3 +32,5 @@
 	email = stian.moellersen@gmail.com
 [color]
 	ui = auto
+[push]
+	default = matching
