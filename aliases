@@ -38,3 +38,4 @@ done
 
 alias jorm='ssh mollerse@mornster.net'
 alias c="clear"
+alias lights="xflux -l 63.416802 -g 10.398839"
