@@ -33,4 +33,4 @@
 [color]
 	ui = auto
 [push]
-	default = matching
+	default = upstream
