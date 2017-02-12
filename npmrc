@@ -1,0 +1,8 @@
+username = mollerse
+email = stian.moellersen@gmail.com
+loglevel = warn
+init.author.email = stian.moellersen@gmail.com
+init.author.name = Stian Møllersen
+save = true
+save-exact = true
+progress = false
