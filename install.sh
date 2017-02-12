@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for file in zshrc zsh_prompt aliases gitconfig inputrc exports extra functions npmrc; do
+for file in zshrc zsh_prompt aliases gitconfig inputrc exports extra functions npmrc hyper.js; do
 	rm -f ~/.$file
 	ln -s $PWD/$file ~/.$file
 done
