@@ -69,11 +69,14 @@ cmd_exec_time() {
 
 preexec() {
 	cmd_timestamp=`date +%s`
+	print -Pn '\e]2;%~ ❯ '
+	print -n "${(q)1}\a"
 }
 
 precmd() {
 	vcs_info
 	# Add `%*` to display the time
+	print -Pn '\e]2;%~\a'
 	print -P '\n%F{$usercolor}%n%f@%F{$hostcolor}%m%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
 	# Reset value since `preexec` isn't always triggered
 	unset cmd_timestamp
