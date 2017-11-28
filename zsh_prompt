@@ -6,9 +6,21 @@
 
 TERM='xterm-256color'
 
-DEFAULT_USER='mollerse'
-DEFAULT_HOST='tiamat'
+DEFAULT_USER='stianmollersen'
+DEFAULT_HOST='mac-stianvm.local'
 CMD_MAX_EXEC_TIME=5
+
+if [ $HOST = $DEFAULT_HOST ]; then
+	local fakedhost='tiamat'
+else
+	fakedhost=$HOST
+fi
+
+if [ $USER = $DEFAULT_USER ]; then
+	local fakeduser='mollerse'
+else
+	fakeduser=$USER
+fi
 
 # For my own and others sanity
 # git:
@@ -77,7 +89,7 @@ precmd() {
 	vcs_info
 	# Add `%*` to display the time
 	print -Pn '\e]2;%~\a'
-	print -P '\n%F{$usercolor}%n%f@%F{$hostcolor}%m%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
+	print -P '\n%F{$usercolor}$fakeduser%f@%F{$hostcolor}$fakedhost%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
 	# Reset value since `preexec` isn't always triggered
 	unset cmd_timestamp
 }
