@@ -1,19 +1,35 @@
+#!/bin/bash
+
 # Make vim the default editor
 export EDITOR="vim"
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
-# Larger bash history (allow 32³ entries; default is 500)
-export HISTSIZE=32768
-export HISTFILESIZE=$HISTSIZE
-export HISTCONTROL=ignoredups
+# Prefer US English and use UTF-8
+export LANG="en_US.UTF-8";
+export LC_ALL="en_US.UTF-8";
 
-# timestamps for bash history. www.debian-administration.org/users/rossen/weblog/1
-# saved for later analysis
-HISTTIMEFORMAT='%F %T '
-export HISTTIMEFORMAT
+export N_PREFIX=$HOME/.n
 
-# Make some commands not show up in history
-export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+# PATH like a bawss
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:$HOME/local/bin
+PATH=$PATH:$HOME/bin
+PATH=$PATH:/sbin
+PATH=$PATH:$HOME/.n/bin/
 
-export MARKPATH=$HOME/.marks
+export PATH
+
+# GPG stuff:
+
+# If the socket we want to use cannot be found, then create it
+# This lets us create multiple shells without haivng to juggle things
+if [[ -S "$( gpgconf --list-dirs agent-ssh-socket )" ]]; then
+  SSH_AUTH_SOCK=$( gpgconf --list-dirs agent-ssh-socket );
+  export SSH_AUTH_SOCK;
+else
+  eval "$( gpg-agent --daemon --enable-ssh-support )";
+fi
+
+GPG_TTY=$(tty)
+export GPG_TTY

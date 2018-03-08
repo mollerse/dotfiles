@@ -1,26 +1,12 @@
+#!/bin/bash
+
 #Based on:
 # Pure
 # by Sindre Sorhus
 # https://github.com/sindresorhus/pure
 # MIT License
 
-TERM='xterm-256color'
-
-DEFAULT_USER='stianmollersen'
-DEFAULT_HOST='mac-stianvm.local'
 CMD_MAX_EXEC_TIME=5
-
-if [ $HOST = $DEFAULT_HOST ]; then
-	local fakedhost='tiamat'
-else
-	fakedhost=$HOST
-fi
-
-if [ $USER = $DEFAULT_USER ]; then
-	local fakeduser='mollerse'
-else
-	fakeduser=$USER
-fi
 
 # For my own and others sanity
 # git:
@@ -43,26 +29,6 @@ zstyle ':vcs_info:git*' actionformats '%b|%a'
 # enable prompt substitution
 setopt PROMPT_SUBST
 
-# Completions
-autoload -U compinit
-compinit -C
-
-# case-insensitive (all),partial-word and then substring completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' \
-    'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-if [ $HOST != $DEFAULT_HOST ]; then
-	local hostcolor='009'
-else
-	hostcolor='012'
-fi
-
-if [ $USER != $DEFAULT_USER ]; then
-	local usercolor='009'
-else
-	local usercolor='012'
-fi
-
 # Fastest possible way to check if repo is dirty
 git_dirty() {
 	# check if we're in a git repo
@@ -81,15 +47,15 @@ cmd_exec_time() {
 
 preexec() {
 	cmd_timestamp=`date +%s`
-	print -Pn '\e]2;%~ ❯ '
+	print -Pn '\e]0;%~ ❯ '
 	print -n "${(q)1}\a"
 }
 
 precmd() {
 	vcs_info
 	# Add `%*` to display the time
-	print -Pn '\e]2;%~\a'
-	print -P '\n%F{$usercolor}$fakeduser%f@%F{$hostcolor}$fakedhost%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
+	print -Pn '\e]0;%~\a'
+	print -P '\n%F{012}$USER%f@%F{012}$HOST%f %F{014}%~%f %F{010}$vcs_info_msg_0_`git_dirty`%f %F{008}`cmd_exec_time`%f'
 	# Reset value since `preexec` isn't always triggered
 	unset cmd_timestamp
 }

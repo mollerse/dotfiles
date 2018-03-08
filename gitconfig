@@ -1,18 +1,56 @@
 [alias]
+	# convenience shorthands
 	c = checkout
 	f = fetch
 	p = push
-	s = status -sb
-	df = diff --color --color-words --abbrev
-	g = gui
 	r = rebase
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-	m = merge
-	co = commit
+	s = status -sb
+
+	# log with pretty format
+	lg = log --color --graph --pretty=format:'%C(red)%h%C(yellow)%d%C(reset)%n%x20%s%n%x20%C(green)%cr%C(reset) by %C(blue)%an%C(reset)%n'
+	# short log (n=20) with pretty format
+	l = log --pretty=oneline -n 20 --graph --abbrev-commit
+	# `git di $number` shows the diff between the state `$number` revisions ago and the current state
+	di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+	# Checkout a pull request from origin of a github repository
+	pr = !"pr() { git fetch origin pull/$1/head:pr-$1; git checkout pr-$1; }; pr"
+	# Amend the previous commit
+	amend = commit --amend --reuse-message=HEAD
+	# Undo previous commit
+	undo = !git reset HEAD~1 --mixed
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
+
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h	%Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
 [core]
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	pager = diff-so-fancy | less --tabs=4 -RFX
+
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+	# Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+
+	editor = vim
+
 [color "branch"]
 	current = yellow reverse
 	local = yellow
@@ -26,12 +64,23 @@
 	added = yellow
 	changed = green
 	untracked = cyan
+[diff]
+	# Show copies as renames
+	renames = copies
+[help]
+	# Automatically correct mistyped commands :D
+	autocorrect = 1
 [merge]
+	# Include summary
 	log = true
+	# Magic unicorn sauce
+	conflictstyle = diff3
 [user]
 	name = Stian Veum Møllersen
 	email = stian.moellersen@gmail.com
 [color]
 	ui = auto
 [push]
-	default = upstream
+	default = simple
+[commit]
+	gpgsign = true

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Create a new directory and enter it
 function md() {
 	mkdir -p "$@" && cd "$@"
@@ -8,47 +10,16 @@ function f() {
     find . -name "$1"
 }
 
-# Copy w/ progress
-cp_p () {
-  rsync -WavP --human-readable --progress $1 $2
-}
-
-
-# Syntax-highlight JSON strings or files
-function json() {
-	if [ -p /dev/stdin ]; then
-		# piping, e.g. `echo '{"foo":42}' | json`
-		python -mjson.tool | pygmentize -l javascript
-	else
-		# e.g. `json '{"foo":42}'`
-		python -mjson.tool <<< "$*" | pygmentize -l javascript
-	fi
-}
-
-# take this repo and copy it to somewhere else minus the .git stuff.
-function gitexport(){
-	mkdir -p "$1"
-	git archive master | tar -x -C "$1"
-}
-
-# get gzipped size
-function gz() {
-	echo "orig size    (bytes): "
-	cat "$1" | wc -c
-	echo "gzipped size (bytes): "
-	gzip -c "$1" | wc -c
-}
-
-# Escape UTF-8 characters into their 3-byte format
-function escape() {
-	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
-	echo # newline
-}
-
-# Decode \x{ABCD}-style Unicode escape sequences
-function unidecode() {
-	perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
-	echo # newline
+# Compare original and gzipped file size
+gz() {
+	local origsize
+	origsize=$(wc -c < "$1")
+	local gzipsize
+	gzipsize=$(gzip -c "$1" | wc -c)
+	local ratio
+	ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l)
+	printf "orig: %d bytes\\n" "$origsize"
+	printf "gzip: %d bytes (%2.2f%%)\\n" "$gzipsize" "$ratio"
 }
 
 # Extract archives - use: extract <file>
@@ -74,30 +45,123 @@ function extract() {
 	fi
 }
 
-function jump { 
-    cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
-}
-function mark { 
-    mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
-}
-function unmark { 
-    rm -i "$MARKPATH/$1"
-}
-function marks {
-    ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
+# Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
+targz() {
+	local tmpFile="${1%/}.tar"
+	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${1}" || return 1
+
+	size=$(
+	stat -f"%z" "${tmpFile}" 2> /dev/null; # OS X `stat`
+	stat -c"%s" "${tmpFile}" 2> /dev/null # GNU `stat`
+	)
+
+	local cmd=""
+	if (( size < 52428800 )) && hash zopfli 2> /dev/null; then
+		# the .tar file is smaller than 50 MB and Zopfli is available; use it
+		cmd="zopfli"
+	else
+		if hash pigz 2> /dev/null; then
+			cmd="pigz"
+		else
+			cmd="gzip"
+		fi
+	fi
+
+	echo "Compressing .tar using \`${cmd}\`…"
+	"${cmd}" -v "${tmpFile}" || return 1
+	[ -f "${tmpFile}" ] && rm "${tmpFile}"
+	echo "${tmpFile}.gz created successfully."
 }
 
-function _completemarks {
-  reply=($(ls $MARKPATH))
+# Determine size of a file or total size of a directory
+fs() {
+	# shellcheck disable=SC2199
+	if [[ -n "$@" ]]; then
+		du -sh -- "$@"
+	else
+		du -sh -- .[^.]* *
+	fi
 }
 
-compctl -K _completemarks jump
-compctl -K _completemarks unmark
+# Replace diff with git diff
+diff() {
+	git diff --no-index --color-words "$@"
+}
 
+# Replace cd with cd + ls
 function cd {
 	builtin cd "$@" && ls;
 }
 
+tre() {
+	tree -aC -I ".git" --dirsfirst "$@" | less -FRNX
+}
+
 function whiteboard() {
     convert "$1" -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 "$2"
+}
+
+# Call from a local repo to open the repository on github/bitbucket in browser
+# Modified version of https://github.com/zeke/ghwd
+repo() {
+	# Figure out github repo base URL
+	local base_url
+	base_url=$(git config --get remote.origin.url)
+	base_url=${base_url%\.git} # remove .git from end of string
+
+	# Fix git@github.com: URLs
+	base_url=${base_url//git@github\.com:/https:\/\/github\.com\/}
+
+	# Fix git://github.com URLS
+	base_url=${base_url//git:\/\/github\.com/https:\/\/github\.com\/}
+
+	# Fix git@bitbucket.org: URLs
+	base_url=${base_url//git@bitbucket.org:/https:\/\/bitbucket\.org\/}
+
+	# Fix git@gitlab.com: URLs
+	base_url=${base_url//git@gitlab\.com:/https:\/\/gitlab\.com\/}
+
+	# Validate that this folder is a git folder
+	if ! git branch 2>/dev/null 1>&2 ; then
+		echo "Not a git repo!"
+		exit $?
+	fi
+
+	# Find current directory relative to .git parent
+	full_path=$(pwd)
+	git_base_path=$(builtin cd "./$(git rev-parse --show-cdup)" || exit 1; pwd)
+	relative_path=${full_path#$git_base_path} # remove leading git_base_path from working directory
+
+	# If filename argument is present, append it
+	if [ "$1" ]; then
+		relative_path="$relative_path/$1"
+	fi
+
+	# Figure out current git branch
+	# git_where=$(command git symbolic-ref -q HEAD || command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+	git_where=$(command git name-rev --name-only --no-undefined --always HEAD) 2>/dev/null
+
+	# Remove cruft from branchname
+	branch=${git_where#refs\/heads\/}
+
+	[[ $base_url == *bitbucket* ]] && tree="src" || tree="tree"
+	url="$base_url/$tree/$branch$relative_path"
+
+
+	echo "Calling $(type open) for $url"
+
+	open "$url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
+}
+
+# Get colors in manual pages
+man() {
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;31m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;44;33m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
+		man "$@"
 }

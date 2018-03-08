@@ -2,9 +2,6 @@
 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# Install nvm
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
-
 # Update brew
 brew update
 
@@ -22,6 +19,11 @@ brew install shellcheck
 brew install tig
 brew install vim
 brew install zsh
+brew install n
+brew install tree
+brew install gnupg pinentry-mac openssl@1.1
+# Various stuff
+brew install coreutils ffmpeg
 # Cairo and deps
 brew install pkg-config cairo pango libpng jpeg giflib
 
@@ -30,10 +32,16 @@ brew cask install atom
 brew cask install spotify
 brew cask install alfred
 brew cask install flux
-brew cask install hyper
+brew cask install dropbox
+brew cask install handbrake
+brew cask install iterm2
+brew cask install itsycal
+brew cask install playback
+brew cask install skype
+brew cask install vlc
+brew cask install deluge
 
-nvm install stable
-
+# atom things
 apm install sync-settings
 
 brew cleanup
@@ -125,3 +133,6 @@ defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0.1
 defaults write com.apple.dock autohide-time-modifier -float 1
 killall Dock
+
+# Sensible sensitivity
+defaults write -g com.apple.mouse.scaling -float 9.5
