@@ -9,14 +9,10 @@ export MANPAGER="less -X"
 export LANG="en_US.UTF-8";
 export LC_ALL="en_US.UTF-8";
 
-export N_PREFIX=$HOME/.n
-
 # PATH like a bawss
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:$HOME/local/bin
 PATH=$PATH:$HOME/bin
-PATH=$PATH:/sbin
-PATH=$PATH:$HOME/.n/bin/
 
 export PATH
 

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Just set the user and host regardless of the system we are on
-export USER=mollerse
-export HOST=tiamat
+# export USER=mollerse
+# export HOST=tiamat
 
 # Turn on some options
 
@@ -20,11 +20,11 @@ setopt correctall
 
 autoload -U compinit
 # https://carlosbecker.com/posts/speeding-up-zsh/
-if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
-  compinit
-else
+# if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+#   compinit
+# else
   compinit -C
-fi
+# fi
 
 # case-insensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' \
