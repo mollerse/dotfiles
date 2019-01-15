@@ -8,7 +8,7 @@ fi
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
 export SAVEHIST=1000
-export HISTIGNORE="c:ls:cd:cd -:pwd:exit:date:* --help:* -h";
+export HISTORY_IGNORE="(c|ls|cd|cd -|pwd|exit|* --help|* -h|git s|git lg|git p|git f|git r|tig|sudo reboot now|ranger|atom|tre|..|...|....|repo|cal|la|top)";
 
 # Show history
 case $HIST_STAMPS in

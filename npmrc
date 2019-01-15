@@ -3,6 +3,6 @@ email=stian.moellersen@gmail.com
 loglevel=warn
 init.author.email=stian.moellersen@gmail.com
 init.author.name=Stian Møllersen
+init.license=CC-BY-NC-SA-4.0
 save=true
-save-exact=true
 progress=false

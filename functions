@@ -170,3 +170,61 @@ man() {
 		LESS_TERMCAP_us="$(printf '\e[1;32m')" \
 		man "$@"
 }
+
+# Speed up nvm
+declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+
+NODE_GLOBALS+=("node")
+NODE_GLOBALS+=("nvm")
+NODE_GLOBALS+=("npx")
+
+load_nvm () {
+  export NVM_DIR="$HOME/.nvm"
+
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+
+for cmd in "${NODE_GLOBALS[@]}"; do
+  eval "${cmd}(){ unset -f ${cmd}; load_nvm; ${cmd} \$@ }"
+done
+
+# Better atom-command
+
+atom() {
+  /usr/bin/env atom ${1:-.}
+}
+
+# Better code-command
+
+code() {
+  /usr/bin/env code ${1:-.}
+}
+
+# cd after clone
+
+clone() {
+  local repo
+  repo=$1
+  if [[ ! $repo == https://* ]] && [[ ! $repo == "git@"* ]] ; then
+    repo="git@github.com:$repo"
+  fi
+
+  git clone $repo && cd "$(basename "$repo" .git)"
+}
+
+random() {
+  head /dev/urandom | tr -dc A-Za-z0-9 | head -c ${1:-13} ; echo ''
+}
+
+# Smart cat
+function cat() {
+if [ -f $1 ] ; then
+		case $1 in
+			*.md) mdcat $1 | bat ;;
+			*) bat $1 ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
