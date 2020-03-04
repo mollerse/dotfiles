@@ -38,4 +38,3 @@ case "$1" in
 esac
 
 setxkbmap -device 3 -option caps:super -layout us -variant altgr-intl
-i3-msg restart
