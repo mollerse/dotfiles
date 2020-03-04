@@ -32,3 +32,6 @@ alias pubkey="gpg --export --armor"
 
 # Sane cal
 alias cal="ncal -bM3"
+
+# Give me a calculator when I want a calculator
+alias calc="eva"
