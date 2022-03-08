@@ -17,15 +17,12 @@ export LC_MESSAGES="en_US.UTF-8";
 # PATH like a bawss
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:$HOME/local/bin
+PATH=$PATH:$HOME/opt/bin
 PATH=$PATH:$HOME/bin
 
 export PATH
 
 export CDPATH=.:$HOME:$HOME/projects:$HOME/nrk
-
-# Used for i3 volume controls
-export AMIXER_SOUND_CARD=0
-export AMIXER_SOUND_CONTROL="Master,0"
 
 # GPG stuff:
 
