@@ -221,9 +221,9 @@ random() {
 function cat() {
 if [ -f $1 ] ; then
 		case $1 in
-			*.md) mdcat $1 | batcat ;;
+			*.md) mdcat $1 | bat ;;
 			*.json) fx $1 ;;
-			*) batcat $1 ;;
+			*) bat $1 ;;
 		esac
 	else
 		echo "'$1' is not a valid file"

@@ -16,8 +16,8 @@ case "$1" in
   "twoscreens")
     xrandr --output eDP1 --off
     xrandr --output DP1-2 --auto --primary
-    xrandr --output DP1-1 --auto --left-of DP1-2 --rotate right
-    xrandr --output DP1-2 --pos 1440x560
+    xrandr --output DP1-1 --auto --right-of DP1-2 --rotate left
+    xrandr --output DP1-2 --pos 0x560
 
     i3-msg "workspace 1, move workspace to output DP1-2"
     i3-msg "workspace 2, move workspace to output DP1-2"
