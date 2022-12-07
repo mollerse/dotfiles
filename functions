@@ -210,7 +210,13 @@ clone() {
     repo="git@github.com:$repo"
   fi
 
-  git clone $repo && cd "$(basename "$repo" .git)"
+  git clone $repo
+
+	cd "$(basename "$repo" .git)"
+
+	if [[ -f "./package.json" ]]; then
+		npm i
+	fi
 }
 
 random() {
