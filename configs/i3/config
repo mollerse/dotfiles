@@ -10,6 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $dotfiles $HOME/projects/dotfiles
+set $functions $HOME/projects/dotfiles/i3-functions
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -39,7 +41,7 @@ client.urgent             #ff69b4 #ff69b4 #050505 #ff69b4   #ff69b4
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty --config ~/projects/dotfiles/kitty.conf --working-directory="`xcwd`"
+bindsym $mod+Return exec kitty --working-directory="`xcwd`"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -68,10 +70,10 @@ bindsym $mod+Mod1+Left move workspace to output left
 bindsym $mod+Mod1+Right move workspace to output right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+# bindsym $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+# bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -88,34 +90,36 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+bindsym $mod+n exec $functions/wrename.sh
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -233,9 +237,9 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id /home/n641688/projects/dotfiles/volume.sh raise
-bindsym XF86AudioLowerVolume exec --no-startup-id /home/n641688/projects/dotfiles/volume.sh lower
-bindsym XF86AudioMute exec --no-startup-id /home/n641688/projects/dotfiles/volume.sh toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id $functions/volume.sh raise
+bindsym XF86AudioLowerVolume exec --no-startup-id $functions/volume.sh lower
+bindsym XF86AudioMute exec --no-startup-id $functions/volume.sh toggle
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
@@ -246,18 +250,18 @@ bindsym $mod+l exec --no-startup-id "i3lock -c ff69b4 -e"
 bindsym $mod+Shift+l exec --no-startup-id "xautolock -toggle"
 
 # Layouts
-bindsym $mod+m exec --no-startup-id /home/n641688/projects/dotfiles/layouts.sh twoscreens
-bindsym $mod+Shift+m exec --no-startup-id /home/n641688/projects/dotfiles/layouts.sh onescreen
-bindsym $mod+k exec --no-startup-id /home/n641688/projects/dotfiles/layouts.sh default
-bindsym $mod+Shift+k exec --no-startup-id /home/n641688/projects/dotfiles/layouts.sh laptop
+bindsym $mod+m exec --no-startup-id $functions/layouts.sh twoscreens
+bindsym $mod+Shift+m exec --no-startup-id $functions/layouts.sh onescreen
+bindsym $mod+k exec --no-startup-id $functions/layouts.sh default
+bindsym $mod+Shift+k exec --no-startup-id $functions/layouts.sh laptop
 
 # Screenshotting
 bindsym --release Print exec --no-startup-id import $HOME/Desktop/$(date -Iseconds).png
 bindsym --whole-window --release Shift+Print exec --no-startup-id import $HOME/Desktop/$(date -Iseconds).png
 
 # System level zoom
-bindsym $mod+equal exec --no-startup-id /home/n641688/projects/dotfiles/zoom.sh in
-bindsym $mod+minus exec --no-startup-id /home/n641688/projects/dotfiles/zoom.sh out
+bindsym $mod+equal exec --no-startup-id $functions/zoom.sh in
+bindsym $mod+minus exec --no-startup-id $functions/zoom.sh out
 
 # Keyboard layout. Device 3 is virtual core keyboard
 exec --no-startup-id setxkbmap -device 3 -option caps:super -layout us -variant altgr-intl
@@ -286,7 +290,11 @@ exec --no-startup-id fluxgui
 
 # programs
 exec --no-startup-id i3-msg 'workspace 1, exec firefox'
-exec --no-startup-id i3-msg 'workspace 2, exec exec kitty --config ~/projects/dotfiles/kitty.conf --working-directory="`xcwd`"'
-exec --no-startup-id i3-msg 'workspace 3, exec exec kitty --config ~/projects/dotfiles/kitty.conf --working-directory="`xcwd`"'
+exec --no-startup-id i3-msg 'workspace 2, exec exec kitty --working-directory="`xcwd`"'
+exec --no-startup-id i3-msg 'workspace 3, exec exec kitty --working-directory="`xcwd`"'
 exec --no-startup-id i3-msg 'workspace 4, exec spotify'
 exec --no-startup-id i3-msg 'workspace 4, exec slack'
+exec --no-startup-id i3-msg 'rename workspace 1 to "1: jobb"'
+exec --no-startup-id i3-msg 'rename workspace 2 to "2: prosjekt"'
+exec --no-startup-id i3-msg 'rename workspace 3 to "3: prosjekt"'
+exec --no-startup-id i3-msg 'rename workspace 4 to "4: sosialt"'
