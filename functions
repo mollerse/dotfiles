@@ -243,3 +243,8 @@ viewpackage() {
 
 	xdg-open "$package_url" &> /dev/null || (echo "Using $(type open) to open URL failed." && exit 1);
 }
+
+# put file-contents in clipboard
+clip() {
+	xclip -selection clipboard $1
+}
