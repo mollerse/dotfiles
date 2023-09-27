@@ -83,7 +83,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
 # bindsym $mod+e layout toggle split
-bindsym $mod+w exec i3-autolayout tabmode --file-layout /tmp/i3-autolayout-tabmode.save
+bindsym $mod+w exec $functions/tabmode.sh
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
