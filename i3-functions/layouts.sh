@@ -34,7 +34,8 @@ case "$1" in
     i3-msg "workspace number 4, move workspace to output HDMI2"
     ;;
   "presentation")
-    echo "Missing"
+    xrandr --output eDP1 --primary --mode 2560x1440
+    xrandr --output HDMI2 --auto --above eDP1
     ;;
   *)
     exit 0

@@ -68,6 +68,8 @@ bindsym $mod+Shift+Right move right
 # Move workspace to screen
 bindsym $mod+Mod1+Left move workspace to output left
 bindsym $mod+Mod1+Right move workspace to output right
+bindsym $mod+Mod1+Up move workspace to output up
+bindsym $mod+Mod1+Down move workspace to output down
 
 # split in horizontal orientation
 # bindsym $mod+h split h
@@ -254,6 +256,7 @@ bindsym $mod+m exec --no-startup-id $functions/layouts.sh twoscreens
 bindsym $mod+Shift+m exec --no-startup-id $functions/layouts.sh onescreen
 bindsym $mod+k exec --no-startup-id $functions/layouts.sh default
 bindsym $mod+Shift+k exec --no-startup-id $functions/layouts.sh laptop
+bindsym $mod+Shift+p exec --no-startup-id $functions/layouts.sh presentation
 
 # Screenshotting
 bindsym --release Print exec --no-startup-id import $HOME/Desktop/$(date -Iseconds).png
@@ -289,12 +292,12 @@ exec --no-startup-id nm-applet
 exec --no-startup-id fluxgui
 
 # programs
-exec --no-startup-id i3-msg 'workspace 1, exec firefox'
-exec --no-startup-id i3-msg 'workspace 2, exec exec kitty --working-directory="`xcwd`"'
-exec --no-startup-id i3-msg 'workspace 3, exec exec kitty --working-directory="`xcwd`"'
-exec --no-startup-id i3-msg 'workspace 4, exec spotify'
-exec --no-startup-id i3-msg 'workspace 4, exec slack'
-exec --no-startup-id i3-msg 'rename workspace 1 to "1: jobb"'
-exec --no-startup-id i3-msg 'rename workspace 2 to "2: prosjekt"'
-exec --no-startup-id i3-msg 'rename workspace 3 to "3: prosjekt"'
-exec --no-startup-id i3-msg 'rename workspace 4 to "4: sosialt"'
+exec --no-startup-id i3-msg 'workspace number 1, exec firefox'
+exec --no-startup-id i3-msg 'workspace number 2, exec exec kitty --working-directory="`xcwd`"'
+exec --no-startup-id i3-msg 'workspace number 3, exec exec kitty --working-directory="`xcwd`"'
+exec --no-startup-id i3-msg 'workspace number 4, exec spotify'
+exec --no-startup-id i3-msg 'workspace number 4, exec slack'
+exec --no-startup-id i3-msg 'workspace number 1, rename workspace to "1: jobb"'
+exec --no-startup-id i3-msg 'workspace number 2, rename workspace to "2: prosjekt"'
+exec --no-startup-id i3-msg 'workspace number 3, rename workspace to "3: prosjekt"'
+exec --no-startup-id i3-msg 'workspace number 4, rename workspace to "4: sosialt"'
