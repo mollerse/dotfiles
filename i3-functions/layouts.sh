@@ -19,19 +19,19 @@ case "$1" in
     xrandr --output DP1-1 --auto --left-of DP1-2 --rotate right
     xrandr --output DP1-2 --pos 1440x560
 
-    i3-msg "workspace 1, move workspace to output DP1-2"
-    i3-msg "workspace 2, move workspace to output DP1-2"
-    i3-msg "workspace 3, move workspace to output DP1-2"
-    i3-msg "workspace 4, move workspace to output DP1-1"
+    i3-msg "workspace number 1, move workspace to output DP1-2"
+    i3-msg "workspace number 2, move workspace to output DP1-2"
+    i3-msg "workspace number 3, move workspace to output DP1-2"
+    i3-msg "workspace number 4, move workspace to output DP1-1"
     ;;
   "onescreen")
     xrandr --output HDMI2 --auto --primary
     xrandr --output eDP1 --off
 
-    i3-msg "workspace 1, move workspace to output HDMI2"
-    i3-msg "workspace 2, move workspace to output HDMI2"
-    i3-msg "workspace 3, move workspace to output HDMI2"
-    i3-msg "workspace 4, move workspace to output HDMI2"
+    i3-msg "workspace number 1, move workspace to output HDMI2"
+    i3-msg "workspace number 2, move workspace to output HDMI2"
+    i3-msg "workspace number 3, move workspace to output HDMI2"
+    i3-msg "workspace number 4, move workspace to output HDMI2"
     ;;
   "presentation")
     echo "Missing"

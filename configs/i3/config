@@ -163,10 +163,10 @@ bar {
            background #050505
            statusline #ebebeb
 
-           focused_workspace  #050505  #eb709b  #050505
-           active_workspace   #050505  #eb709b  #050505
+           focused_workspace  #050505  #ff69b4  #050505
+           active_workspace   #050505  #ff69b4  #050505
            inactive_workspace #050505  #ebebeb  #050505
-           urgent_workspace   #ebebeb  #eb709b  #050505
+           urgent_workspace   #ebebeb  #ff69b4  #050505
         }
 }
 
@@ -184,10 +184,10 @@ bar {
            background #050505
            statusline #ebebeb
 
-           focused_workspace  #050505  #eb709b  #050505
-           active_workspace   #050505  #eb709b  #050505
+           focused_workspace  #050505  #ff69b4  #050505
+           active_workspace   #050505  #ff69b4  #050505
            inactive_workspace #050505  #ebebeb  #050505
-           urgent_workspace   #ebebeb  #eb709b  #050505
+           urgent_workspace   #ebebeb  #ff69b4  #050505
         }
 }
 
@@ -206,10 +206,10 @@ bar {
            background #050505
            statusline #ebebeb
 
-           focused_workspace  #050505  #eb709b  #050505
-           active_workspace   #050505  #eb709b  #050505
+           focused_workspace  #050505  #ff69b4  #050505
+           active_workspace   #050505  #ff69b4  #050505
            inactive_workspace #050505  #ebebeb  #050505
-           urgent_workspace   #ebebeb  #eb709b  #050505
+           urgent_workspace   #ebebeb  #ff69b4  #050505
         }
 }
 
@@ -225,10 +225,10 @@ bar {
            background #050505
            statusline #ebebeb
 
-           focused_workspace  #050505  #eb709b  #050505
-           active_workspace   #050505  #eb709b  #050505
+           focused_workspace  #050505  #ff69b4  #050505
+           active_workspace   #050505  #ff69b4  #050505
            inactive_workspace #050505  #ebebeb  #050505
-           urgent_workspace   #ebebeb  #eb709b  #050505
+           urgent_workspace   #ebebeb  #ff69b4  #050505
         }
 }
 
@@ -277,7 +277,7 @@ bindsym $mod+u exec --no-startup-id sudo /bin/systemctl start bluetooth.service
 
 exec_always --no-startup-id i3-autolayout autolayout
 
-exec --no-startup-id xautolock -time 2 -locker 'i3lock -c ff00ff -e'
+exec --no-startup-id xautolock -time 2 -locker 'i3lock -c ff69b4 -e'
 
 gaps inner 15px
 
