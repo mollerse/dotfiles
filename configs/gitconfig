@@ -87,6 +87,7 @@
 	ui = auto
 [push]
 	default = simple
+	followTags = true
 [commit]
 	gpgsign = true
 [merge "npm-merge-driver"]

@@ -23,10 +23,10 @@ font pango:Hasklig Medium 14
 # client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 # client.urgent           #2f343a #900000 #ffffff #900000   #900000
 
-client.focused            #ff69b4 #ff69b4 #050505 #050505   #050505
-client.focused_inactive   #ebebeb #ebebeb #050505 #050505   #050505
-client.unfocused          #ebebeb #ebebeb #050505 #050505   #050505
-client.urgent             #ff69b4 #ff69b4 #050505 #ff69b4   #ff69b4
+client.focused            #050505 #ff69b4 #050505 #050505   #050505
+client.focused_inactive   #050505 #ebebeb #050505 #050505   #050505
+client.unfocused          #050505 #ebebeb #050505 #050505   #050505
+client.urgent             #050505 #ff69b4 #050505 #ff69b4   #ff69b4
 #
 # client.background       #ffffff
 
@@ -81,9 +81,10 @@ bindsym $mod+Mod1+Down move workspace to output down
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-# bindsym $mod+s layout stacking
-# bindsym $mod+e layout toggle split
-bindsym $mod+w exec $functions/tabmode.sh
+bindsym $mod+s layout stacking
+bindsym $mod+e layout toggle split
+bindsym $mod+w layout tabbed
+# bindsym $mod+w exec $functions/tabmode.sh
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -157,7 +158,7 @@ bar {
         status_command i3status -c $HOME/.config/i3status/config.dock
         position top
         separator_symbol "|"
-        output DP1-1
+        output DP1-2
 
         font pango:Hasklig Medium 14
 
@@ -218,8 +219,8 @@ bar {
 # i3Bar for secondary external screen
 bar {
         position top
-        output DP1-2
-        tray_output DP1-1
+        output DP1-1
+        tray_output DP1-2
 
         font pango:Hasklig Medium 14
 
@@ -278,8 +279,6 @@ bindsym $mod+i exec --no-startup-id bluetoothctl connect $(bluetoothctl devices 
 bindsym $mod+Shift+u exec --no-startup-id sudo /bin/systemctl stop bluetooth.service
 bindsym $mod+u exec --no-startup-id sudo /bin/systemctl start bluetooth.service
 
-exec_always --no-startup-id i3-autolayout autolayout
-
 exec --no-startup-id xautolock -time 2 -locker 'i3lock -c ff69b4 -e'
 
 gaps inner 15px
@@ -300,4 +299,4 @@ exec --no-startup-id i3-msg 'workspace number 4, exec slack'
 exec --no-startup-id i3-msg 'workspace number 1, rename workspace to "1: jobb"'
 exec --no-startup-id i3-msg 'workspace number 2, rename workspace to "2: prosjekt"'
 exec --no-startup-id i3-msg 'workspace number 3, rename workspace to "3: prosjekt"'
-exec --no-startup-id i3-msg 'workspace number 4, rename workspace to "4: sosialt"'
+exec --no-startup-id i3-msg 'workspace number 4, rename workspace to "4: com"'
