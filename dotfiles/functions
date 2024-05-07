@@ -171,12 +171,6 @@ man() {
 		man "$@"
 }
 
-# Better atom-command
-
-atom() {
-  /usr/bin/env atom ${1:-.}
-}
-
 # Better code-command
 
 code() {

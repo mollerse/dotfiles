@@ -16,26 +16,10 @@ export LC_MESSAGES="en_US.UTF-8";
 
 # PATH like a bawss
 PATH=$PATH:/usr/local/bin
-PATH=$PATH:$HOME/local/bin
-PATH=$PATH:$HOME/opt/bin
-PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.local/bin
 
 export PATH
 
-export CDPATH=.:$HOME:$HOME/projects:$HOME/nrk
-
-# GPG stuff:
-
-# If the socket we want to use cannot be found, then create it
-# This lets us create multiple shells without haivng to juggle things
-if [[ -S "$( gpgconf --list-dirs agent-ssh-socket )" ]]; then
-  SSH_AUTH_SOCK=$( gpgconf --list-dirs agent-ssh-socket );
-  export SSH_AUTH_SOCK;
-else
-  eval "$( gpg-agent --daemon --enable-ssh-support )";
-fi
-
-GPG_TTY=$(tty)
-export GPG_TTY
+export CDPATH=.:$HOME:$HOME/Projects:$HOME/NRK
 
 export BAT_THEME="Dracula"

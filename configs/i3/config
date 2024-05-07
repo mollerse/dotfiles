@@ -10,8 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
-set $dotfiles $HOME/projects/dotfiles
-set $functions $HOME/projects/dotfiles/i3-functions
+set $dotfiles $HOME/Projects/dotfiles
+set $functions $HOME/Projects/dotfiles/i3-functions
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -158,7 +158,7 @@ bar {
         status_command i3status -c $HOME/.config/i3status/config.dock
         position top
         separator_symbol "|"
-        output DP1-2
+        output DisplayPort-7
 
         font pango:Hasklig Medium 14
 
@@ -200,8 +200,8 @@ bar {
         status_command i3status -c $HOME/.config/i3status/config.laptop
         position top
         separator_symbol "|"
-        output eDP1
-        tray_output eDP1
+        output eDP
+        tray_output eDP
 
         font pango:Hasklig Medium 14
 
@@ -219,8 +219,8 @@ bar {
 # i3Bar for secondary external screen
 bar {
         position top
-        output DP1-1
-        tray_output DP1-2
+        output DisplayPort-6
+        tray_output DisplayPort-7
 
         font pango:Hasklig Medium 14
 
@@ -288,7 +288,6 @@ gaps inner 15px
 # tray stuff
 exec --no-startup-id blueman-applet
 exec --no-startup-id nm-applet
-exec --no-startup-id fluxgui
 
 # programs
 exec --no-startup-id i3-msg 'workspace number 1, exec firefox'
