@@ -2,13 +2,13 @@
 
 case "$1" in
   "default")
-    xrandr --output eDP --mode 2560x1440
+    xrandr --output eDP --mode 1920x1200
     xrandr --output DisplayPort-6 --off
     xrandr --output DisplayPort-7 --off
     xrandr --output HDMI2 --off
     ;;
   "laptop")
-    xrandr --output eDP --mode 1920x1080
+    xrandr --output eDP --mode 1920x1200
     xrandr --output DisplayPort-6 --off
     xrandr --output DisplayPort-7 --off
     xrandr --output HDMI2 --off
@@ -34,7 +34,7 @@ case "$1" in
     i3-msg "workspace number 4, move workspace to output HDMI2"
     ;;
   "presentation")
-    xrandr --output eDP --primary --mode 2560x1440
+    xrandr --output eDP --primary --mode 1920x1200
     xrandr --output HDMI2 --auto --above eDP
     ;;
   *)

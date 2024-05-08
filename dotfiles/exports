@@ -23,3 +23,5 @@ export PATH
 export CDPATH=.:$HOME:$HOME/Projects:$HOME/NRK
 
 export BAT_THEME="Dracula"
+
+eval "$(dircolors)"
